@@ -13,8 +13,8 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText nameEditText, ageEditText, genderEditText;
-    private Button addButton, showAllDataId;
+    private EditText nameEditText, ageEditText, genderEditText,idEditTextId;
+    private Button addButton, showAllDataId, updateDataId, deleteDataId;
 
     MyDataBaseHelper myDataBaseHelper;
 
@@ -48,6 +48,22 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void update_data(){
+
+        String Name = nameEditText.getText().toString();
+        String Age = ageEditText.getText().toString();
+        String Gender = genderEditText.getText().toString();
+        String Id = idEditTextId.getText().toString();
+
+        myDataBaseHelper.updateData(Id,Name,Age,Gender);
+
+    }
+
+    public void delete_data(){
+        String Id = idEditTextId.getText().toString();
+        myDataBaseHelper.deleteData(Id);
+    }
+
     public void show_data(String title, String data){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -72,7 +88,9 @@ public class MainActivity extends AppCompatActivity {
         genderEditText = findViewById(R.id.genderEditTextId);
         addButton = findViewById(R.id.addButtonId);
         showAllDataId = findViewById(R.id.showAllDataId);
-
+        idEditTextId = findViewById(R.id.idEditTextId);
+        updateDataId = findViewById(R.id.updateDataId);
+        deleteDataId = findViewById(R.id.deleteDataId);
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +103,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 retrieve_data();
+            }
+        });
+
+        updateDataId.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                update_data();
+            }
+        });
+
+        deleteDataId.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                delete_data();
             }
         });
     }

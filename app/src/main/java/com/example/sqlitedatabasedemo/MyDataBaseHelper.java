@@ -67,6 +67,8 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
 
         long rowId = sqLiteDatabase.insert(TABLE_NAME,null,contentValues);
 
+       // sqLiteDatabase.close();
+
         return rowId;
 
     }
@@ -76,8 +78,28 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery(SELECT_ALL, null);
 
+        //cursor.close();
+
         return cursor;
 
+    }
+
+    public void updateData(String mId, String mName, String mAge, String mGender){
+
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ID,mId);
+        contentValues.put(NAME,mName);
+        contentValues.put(GENDER,mGender);
+        contentValues.put(AGE,mAge);
+
+        sqLiteDatabase.update(TABLE_NAME,contentValues,ID+" = ?", new String[]{mId});
+
+    }
+
+    public void deleteData(String mId){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        sqLiteDatabase.delete(TABLE_NAME,ID + " = ?", new String[]{mId});
     }
 
 
